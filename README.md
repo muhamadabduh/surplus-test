@@ -17,8 +17,8 @@
 
 ## Interacting with App Container
 - with command : ```docker exec -it backend bash``` then you can run any artisan commands  
-- run : ```composer install``` if necessary.
-- run : ```php artisan key:generate``` if necessary.
+- run : ```composer install``` 
+- run : ```php artisan key:generate```
 
 
 ## Interacting with Database Container
@@ -37,3 +37,5 @@ after connect with postgres sql cli. make commands : ```create database surplus;
 - ```php artisan migrate```
 
 ### Seed Database
+- ```docker exec -it backend bash```
+- ```php artisan db:seed```
