@@ -100,7 +100,54 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string',
+            'description' => 'required|string',
+            'enable' => 'required',
+            'categories' => 'required|string',
+            'images' => 'required|string',
+        ]);
+
+        $enable = $request['enable'] === 'true' ? true : false;
+
+        $product->name = $request['name'];
+        $product->description = $request['description'];
+        $product->enable = $enable;
+
+        $product->save();
+
+        $categories = explode(",", $request['categories']);
+        $category_ids = [];
+        foreach ($categories as $key => $name) {
+            $category = Category::firstOrCreate([
+                'name' => $name,
+                'enable' => true
+            ]);
+
+            $category_ids[] = $category->id;
+        }
+        // relate product with categories
+        $product->categories()->sync($category_ids);
+
+        // upload images
+        $image_files = explode(",", $request['images']);
+        $image_ids = [];
+
+        foreach ($image_files as $file) {
+
+            $image = Image::firstOrCreate([
+                'file' => $file
+            ], [
+                'name' => $file,
+                'enable' => true
+            ]);
+
+            $image_ids[] = $image->id;
+        }
+
+        // relate product with images
+        $product->images()->sync($image_ids);
+        return response()->json($product);
     }
 
     /**
@@ -111,6 +158,7 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        $product->delete();
+        return response()->json(['message' => 'deleted']);
     }
 }
