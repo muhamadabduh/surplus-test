@@ -5,7 +5,7 @@ networks:
 
 
 volumes:
-  app-data:
+  db-postgres:
 
 
 services:
@@ -19,6 +19,19 @@ services:
     volumes:
       - ./:/var/www
       - .docker/nginx:/etc/nginx/conf.d
+    networks:
+      app-network:
+
+
+  postgres:
+    image: postgres:12.3-alpine
+    ports:
+      - '5432:5432'
+    volumes:
+      - db-postgres:/var/lib/postgresql/data
+    env_file:
+      - .env
+    restart: unless-stopped
     networks:
       app-network:
 
