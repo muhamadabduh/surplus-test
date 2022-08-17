@@ -9,21 +9,6 @@ volumes:
 
 
 services:
-  db:
-    image: mysql:8.0
-    container_name: travellist-db
-    restart: unless-stopped
-    environment:
-      MYSQL_DATABASE: ${DB_DATABASE}
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-      MYSQL_PASSWORD: ${DB_PASSWORD}
-      SERVICE_TAGS: dev
-      SERVICE_NAME: mysql
-    volumes:
-      - ./.docker/mysql:/docker-entrypoint-initdb.d
-    networks:
-      app-network:
-
 
   webserver:
     image: nginx:1.21.6-alpine
