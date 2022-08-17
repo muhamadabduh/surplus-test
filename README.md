@@ -1,8 +1,7 @@
 # Surplus Test Backend
 
 ## Stacks 
-- Laravel 9
-- Docker
+- Laravel 9 with Docker (cloned from https://github.com/k90mirzaei/laravel9-docker)
 - Postgresql
 
 ## Requirements
